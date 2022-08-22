@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./stylesheets/profile.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+<body>
+        <main id="profile-main-section">
+           <!-- <% include partials/nav.ejs %> -->
+           <nav>
+            <header id="profile-heading">
+                <h1>Welcome <%= currentUser %></h1>
+                <div id="btnbar">
+                    <span id="msgspan">
+                            <a id="msgofuser"></a>
+                            <div id="msg-menu" >
+                                <%  users.filter(function(data){ if(data.username === currentUser){ %>
+                                <%    Object.keys(data.message).forEach((name)=>{ %>
+                                    <div class="msg-menu-subsection">
+                                        <div id="userimg"><%= name.substring(0,1).toUpperCase() %></div>
+                                        <div id="usermsg">
+                                            <%= data.message[name][data.message[name].length-1] %>
+                                        </div>
+                                    </div>
+                                <%  }) %>
+                                <% }}) %>    
+                            </div>
+                    </span>
+                    <span id="logoutspan"><a href="/logout">logout</a></span>
+                </div>
+            </header>
+            </nav>
+            <section id="user-section">
+                <div id="user-wrapper">
+                    <div class="users">
+                        <% var name = 'hello'; %>
+                        <%  users.filter(function(data){ if(data.username !== currentUser){ %>
+                        <div class="user">
+                            <a href="/profile/message/<%= data.username %>">
+                            <div class="user-letter"><%= data.username.substring(0,1).toUpperCase() %></div>
+                            <div class="username"><%= data.username %></div></a>
+                        </div>
+                        <% }}) %>
+                        %>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script>
+                var msgmenu = document.querySelector('#msg-menu');
+                var msgofuser = document.querySelector('#msgofuser');
+                    msgofuser.addEventListener('click', function(){
+                        if(msgmenu.classList.length === 0){
+                            msgmenu.classList.add('msg-menu');
+                            msgmenu.style.display = 'initial';
+                        }else{
+                            msgmenu.classList.remove('msg-menu');
+                            msgmenu.style.display = 'none';
+                        }
+                    })
+        </script>
+</body>
+</html>
